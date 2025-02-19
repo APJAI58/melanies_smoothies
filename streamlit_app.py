@@ -8,6 +8,9 @@ st.write(
     """Choose the fruits you want in your custom Smoothie!
     """)
 
+name_on_order = st.text_input('Name on Smoothie')
+st.write('The name on your Smoothie will be:', name_on_order)
+
 from snowflake.snowpark.functions import col
 
 cnx = st.connection("snowflake")
@@ -20,6 +23,7 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:'
     ,my_dataframe
+    ,max_selections=5
 )
 
 if ingredients_list:
